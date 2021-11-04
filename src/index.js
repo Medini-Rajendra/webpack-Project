@@ -1,6 +1,8 @@
 // import _ from 'lodash';
 import './style.css';
 
+const listModuleimport = require('./callmodules.js');
+
 class TodoList {
   constructor(desc, completed, index) {
     this.desc = desc;
@@ -9,46 +11,6 @@ class TodoList {
   }
 
   static getList = () => JSON.parse(localStorage.getItem('list')) || [];
-
-  static removeTask = (index) => {
-    const listdel = TodoList.getList();
-    const newlistdel = listdel.filter((ind) => ind.index !== index);
-    if (newlistdel.length > 0) {
-      let i = 1;
-      newlistdel.forEach((element) => {
-        element.index = i;
-        i += 1;
-      });
-    }
-    localStorage.setItem('list', JSON.stringify(newlistdel));
-  }
-
-  static updatetask = (task, e, description) => {
-    if (e.target.checked) {
-      task.completed = true;
-      description.classList.add('done');
-    } else {
-      task.completed = false;
-      description.classList.remove('done');
-    }
-    const oldList = JSON.parse(localStorage.getItem('list'));
-    oldList.forEach((element) => {
-      if (element.index === task.index) {
-        element.completed = task.completed;
-      }
-    });
-    localStorage.setItem('list', JSON.stringify(oldList));
-  }
-
-  static editTask = (task) => {
-    const list = TodoList.getList();
-    list.forEach((element) => {
-      if (element.index === task.index) {
-        element.desc = task.desc;
-      }
-    });
-    localStorage.setItem('list', JSON.stringify(list));
-  }
 
   static newTask = (task) => {
     const listcontain = document.createElement('div');
@@ -64,7 +26,7 @@ class TodoList {
     chkbox.type = 'checkbox';
     chkbox.name = 'chkboxlist';
     remicon.addEventListener('click', (e) => {
-      TodoList.removeTask(task.index);
+      listModuleimport.removeTask(task.index);
       e.target.parentNode.remove();
     });
 
@@ -76,7 +38,7 @@ class TodoList {
       title.classList.remove('done');
     }
     chkbox.addEventListener('change', (e) => {
-      TodoList.updatetask(task, e, title);
+      listModuleimport.updatetask(task, e, title);
     });
     listcontain.appendChild(chkbox);
     listcontain.appendChild(title);
@@ -93,7 +55,7 @@ class TodoList {
       title.setAttribute('contenteditable', 'true');
       title.addEventListener('keyup', () => {
         task.desc = title.innerText;
-        TodoList.editTask(task);
+        listModuleimport.editTask(task);
       });
     });
   };
