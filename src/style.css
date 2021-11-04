@@ -1,0 +1,42 @@
+.mainclass {
+  margin: 5%;
+  padding: 2%;
+}
+
+.listname {
+  border: none;
+  font-style: italic;
+}
+
+.list-complete {
+  padding-left: 0;
+}
+
+.clearbutton {
+  width: 100%;
+  border: none;
+}
+
+.invisible {
+  display: none;
+}
+
+.fa-trash-alt {
+  position: absolute;
+  right: 5rem;
+  transition: width 2s;
+}
+
+.fa-trash-alt:hover {
+  transform: scale(1.3);
+}
+
+.done {
+  text-decoration: line-through;
+  color: #f11023;
+}
+
+#submiticon {
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+}
