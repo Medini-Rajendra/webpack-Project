@@ -2,6 +2,7 @@
 import './style.css';
 
 const listModuleimport = require('./callmodules.js');
+const clearModuleimport = require('./removeall.js');
 
 class TodoList {
   constructor(desc, completed, index) {
@@ -69,32 +70,6 @@ class TodoList {
       });
     }
   }
-
-  static clearAll = () => {
-    const list = TodoList.getList();
-    list.forEach((element) => {
-      if (element.completed) {
-        element.index = 0;
-      }
-    });
-    const newList = list.filter((ind) => ind.index !== 0);
-    if (newList.length > 0) {
-      let i = 1;
-      newList.forEach((element) => {
-        element.index = i;
-        i += 1;
-      });
-    }
-    localStorage.setItem('list', JSON.stringify(newList));
-    const allCheckboxes = Array.from(
-      document.querySelectorAll('input[type="checkbox"]'),
-    );
-    allCheckboxes.forEach((checkbox) => {
-      if (checkbox.checked) {
-        checkbox.parentNode.remove();
-      }
-    });
-  };
 }
 
 const moveList = () => {
@@ -156,5 +131,5 @@ document.querySelector('#submiticon').addEventListener('keyup', (e) => {
 });
 
 document.querySelector('.clearbutton').addEventListener('click', () => {
-  TodoList.clearAll();
+  clearModuleimport.clearAll();
 });
